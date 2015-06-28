@@ -7,6 +7,10 @@ public class Player : MonoBehaviour {
 
 	public float speed;
 
+	public GUIText positiontext;
+
+	int pos_x = 0;
+	int pos_y = 0;
 
 	private bool hitBorder = false;
 
@@ -80,7 +84,9 @@ public class Player : MonoBehaviour {
 
 		//update players position
 		gameObject.transform.position = TempPos;
-		
+		positiontext.text = "(" + pos_x + "," + pos_y + ")";
+
+
 	}
 	void UpdateGunDirection(){
 		int i;
@@ -92,4 +98,30 @@ public class Player : MonoBehaviour {
 			}
 		}
 	}
+
+	void OnTriggerEnter2D(Collider2D other){ //Collisions with triggers
+
+
+
+		switch (other.tag) { // checks for door collisions
+			case "WestDoor":
+				print ("West Door");
+				pos_x -=1;
+				break;
+			case "EastDoor":
+				print ("East Door");
+				pos_x+=1;
+				break;
+			case "NorthDoor":
+				print ("North Door");
+				pos_y+=1;
+				break;
+			case "SouthDoor":
+				print ("South Door");
+				pos_y -=1;
+				break;
+		}
+	}
+
+
 }
