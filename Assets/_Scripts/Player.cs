@@ -20,13 +20,19 @@ public class Player : MonoBehaviour {
 	public Transform NorthWall;
 	public Transform SouthWall;
 
+	//Guns
 	public GameObject NorthGun;
 	public GameObject EastGun;
 	public GameObject SouthGun;
 	public GameObject WestGun;
 
-	List<GameObject> RotatedGuns = new List<GameObject>();
+	//Doors
+	public GameObject WestDoor;
+	public GameObject EastDoor;
+	public GameObject NorthDoor;
+	public GameObject SouthDoor;
 
+	List<GameObject> RotatedGuns = new List<GameObject>();
 
 	enum Direction
 	{
@@ -101,26 +107,44 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){ //Collisions with triggers
 
-
+		Vector3 tempPos = gameObject.transform.position;
 
 		switch (other.tag) { // checks for door collisions
 			case "WestDoor":
 				print ("West Door");
-				pos_x -=1;
+				pos_x -=1;	
+				
+				tempPos = EastDoor.transform.position;
+				tempPos.x -= gameObject.transform.localScale.x;
+				
 				break;
 			case "EastDoor":
 				print ("East Door");
 				pos_x+=1;
+
+				tempPos = WestDoor.transform.position;
+				tempPos.x += gameObject.transform.localScale.x;
+
 				break;
 			case "NorthDoor":
 				print ("North Door");
 				pos_y+=1;
+
+				tempPos = SouthDoor.transform.position;
+				tempPos.y += gameObject.transform.localScale.y;
+
 				break;
 			case "SouthDoor":
 				print ("South Door");
 				pos_y -=1;
+				
+				tempPos = NorthDoor.transform.position;
+				tempPos.y -= gameObject.transform.localScale.y;	
+
+
 				break;
 		}
+		gameObject.transform.position = tempPos;
 	}
 
 

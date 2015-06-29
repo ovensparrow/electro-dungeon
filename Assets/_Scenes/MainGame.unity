@@ -1498,6 +1498,38 @@ Prefab:
       propertyPath: positiontext
       value: 
       objectReference: {fileID: 131501210}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: NorthSpawn
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: WestSpawn
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: EastSpawn
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: SouthSpawn
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: NorthDoor
+      value: 
+      objectReference: {fileID: 2082871610}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: SouthDoor
+      value: 
+      objectReference: {fileID: 135335877}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: EastDoor
+      value: 
+      objectReference: {fileID: 2061274184}
+    - target: {fileID: 11490326, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
+      propertyPath: WestDoor
+      value: 
+      objectReference: {fileID: 1012386413}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4495ce2ca346bf54ebcddbf79b983c7e, type: 2}
   m_IsPrefabParent: 0
