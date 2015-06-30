@@ -11,6 +11,10 @@ public class Player : MonoBehaviour {
 
 	int pos_x = 0;
 	int pos_y = 0;
+	int world_width = 8;
+	int world_height = 8;
+
+	Room rc;
 
 	private bool hitBorder = false;
 
@@ -50,14 +54,49 @@ public class Player : MonoBehaviour {
 		RotatedGuns.Add (WestGun);
 
 		UpdateGunDirection ();
+		rc = new Room ();
+		print (rc.room_biome);
 
-	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 
+		//check the players position for the doors to be correct
+
+
+		//West Door
+		if (pos_x == 0) {
+			WestDoor.SetActive (false);
+		} else {
+			WestDoor.SetActive (true);
+		}
+
+
+		//North Door
+		if (pos_y == 0) {
+			NorthDoor.SetActive (false);
+		} else {
+			NorthDoor.SetActive (true);
+		}
+
+		//East Door
+
+		if (pos_x >= world_width) {
+			EastDoor.SetActive (false);
+		} else {
+			EastDoor.SetActive (true);
+		}
+
+		//South Door
+
+		if (pos_y <= world_width * -1) {
+			SouthDoor.SetActive (false);
+		} else {
+			SouthDoor.SetActive (true);
+		}
+		
 		//Getting Input from the user via Horizontal and vertical axis (Input my varie) wasd
 		float Horizontal = Input.GetAxis ("Horizontal");
 		float Vertical = Input.GetAxis ("Vertical");
