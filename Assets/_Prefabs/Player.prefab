@@ -72,6 +72,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &129208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 448824}
+  - 61: {fileID: 6168850}
+  - 50: {fileID: 5069772}
+  - 114: {fileID: 11428866}
+  m_Layer: 8
+  m_Name: PlayerHitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &129862
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,11 +186,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 498188}
   - 61: {fileID: 6135326}
-  - 50: {fileID: 5066808}
   - 114: {fileID: 11490326}
+  - 50: {fileID: 5091856}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,6 +289,18 @@ Transform:
   - {fileID: 467210}
   m_Father: {fileID: 498188}
   m_RootOrder: 5
+--- !u!4 &448824
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498188}
+  m_RootOrder: 6
 --- !u!4 &467210
 Transform:
   m_ObjectHideFlags: 1
@@ -335,6 +365,7 @@ Transform:
   - {fileID: 489486}
   - {fileID: 432788}
   - {fileID: 442654}
+  - {fileID: 448824}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2303234
@@ -616,7 +647,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199784}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!50 &5066808
+--- !u!50 &5069772
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129208}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!50 &5091856
 Rigidbody2D:
   serializedVersion: 2
   m_ObjectHideFlags: 1
@@ -640,7 +687,20 @@ BoxCollider2D:
   m_GameObject: {fileID: 181078}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: .200000003}
+  serializedVersion: 2
+  m_Size: {x: 1, y: .800000012}
+--- !u!61 &6168850
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129208}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .200000003}
   serializedVersion: 2
@@ -753,6 +813,18 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11428866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 129208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82adc0c85d407c4f85c93bfa061da83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p: {fileID: 11490326}
 --- !u!114 &11490326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -765,6 +837,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  room: {fileID: 148938, guid: 80ad4c9091ef7e04e8d8b394e4e64a10, type: 2}
+  healthbar: {fileID: 0}
+  health: 0
+  gameover: 0
+  gameovertext: {fileID: 0}
+  sword: {fileID: 156586, guid: d88838bcb0cd8384a85b2e4c2b6e4701, type: 2}
+  projectile: {fileID: 105786, guid: b9909c9fb63a7d44b98b79abc00007f1, type: 2}
+  background: {fileID: 0}
+  positiontext: {fileID: 0}
+  current_player_pos: {x: 0, y: 0}
+  current_room: {fileID: 0}
   WestWall: {fileID: 0}
   EastWall: {fileID: 0}
   NorthWall: {fileID: 0}
@@ -773,13 +856,37 @@ MonoBehaviour:
   EastGun: {fileID: 104816}
   SouthGun: {fileID: 162626}
   WestGun: {fileID: 154640}
+  WestDoor: {fileID: 0}
+  EastDoor: {fileID: 0}
+  NorthDoor: {fileID: 0}
+  SouthDoor: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 181078}

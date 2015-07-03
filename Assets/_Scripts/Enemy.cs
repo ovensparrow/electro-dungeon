@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 
 		Vector3 TempPos = gameObject.transform.position;
 
@@ -42,4 +42,14 @@ public class Enemy : MonoBehaviour {
 
 		gameObject.transform.position = TempPos;
 	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.tag == "Sword") {
+			Destroy (gameObject);
+		}else if (other.tag == "Bullet"){
+			Destroy (other.gameObject);
+			Destroy (gameObject);
+		}
+	}
+
 }

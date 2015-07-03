@@ -11,10 +11,14 @@ public class Room : MonoBehaviour {
 	public biomes room_biome;
 
 	public GameObject Enemy;
-	
+
+	public GameObject Chest;
+
 	public GameObject background;
 
 	public List<GameObject> Enemies;
+
+	Player p;
 
 	//biomes Materials
 
@@ -27,8 +31,10 @@ public class Room : MonoBehaviour {
 	//Start
 	void Start(){
 
+		p = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 
 
+		int chest_chance = Random.Range (0, 4);
 
 		//Used form biome generation
 		int b = Random.Range (0, 3);
@@ -44,7 +50,8 @@ public class Room : MonoBehaviour {
 
 			Vector3 tempPos = go.transform.position;
 			tempPos = Vector3.zero;
-			tempPos.y += Random.Range (0,3);
+			tempPos.y += Random.Range (0,3) - 1.5f;
+			tempPos.y += Random.Range (0,3) - 1.5f;
 			go.transform.position = tempPos;
 
 
@@ -56,17 +63,19 @@ public class Room : MonoBehaviour {
 				background.GetComponent <Renderer>().material = forest;
 				break;
 			case biomes.cave:
-				Color gray = new Color(158,158,158);
 				background.GetComponent <Renderer>().material = cave;
 				break;
 			case biomes.dungeon:
-				Color lightblue = new Color(128,216,255);
 				background.GetComponent <Renderer>().material = dungeon;
 				break;
 		}
 
 
-
+		if (chest_chance == 0) {
+			GameObject go = Instantiate(Chest) as GameObject;
+			go.GetComponent<Chest>().p = p;
+			go.transform.parent = gameObject.transform;
+		}
 
 
 

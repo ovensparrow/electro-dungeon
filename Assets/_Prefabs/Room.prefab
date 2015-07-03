@@ -41,6 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   room_biome: 1
   Enemy: {fileID: 160246, guid: e62c4eec194e19d42aab787bf88e5a0c, type: 2}
+  Chest: {fileID: 107734, guid: df141572ec054c341bdd2739cf984afc, type: 2}
   background: {fileID: 0}
   Enemies: []
   forest: {fileID: 2100000, guid: e025ba5831ae50443960ed1cd2f5ff56, type: 2}
@@ -73,6 +74,10 @@ Prefab:
       propertyPath: cave
       value: 
       objectReference: {fileID: 2100000, guid: 9f6737a00ac9c934795b3d15f73b3c61, type: 2}
+    - target: {fileID: 0}
+      propertyPath: Chest
+      value: 
+      objectReference: {fileID: 107734, guid: df141572ec054c341bdd2739cf984afc, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 148938}

@@ -9,11 +9,26 @@ public class Player : MonoBehaviour {
 
 	public GameObject room;
 
+	public GUIText healthbar;
+	public int health;
+
+	public int chests_collected;
+
+	public bool gameover = false;
+	public GUIText gameovertext;
+
+
+	public GUIText wepinfo;
+	public GUIText score;
+
+	//Weapons
 	public GameObject sword;
+	public GameObject projectile;
+
 
 	public GameObject background;
 
-	public GUIText positiontext;
+	public GUIText InstructionsText;
 
 	public Vector2 current_player_pos;
 	public GameObject current_room;
@@ -21,13 +36,6 @@ public class Player : MonoBehaviour {
 
 	int world_width = 8;
 	int world_height = 8;
-
-
-
-
-	Room rc;
-
-	private bool hitBorder = false;
 
 	// Walls
 	public Transform WestWall;
@@ -50,24 +58,37 @@ public class Player : MonoBehaviour {
 	List<GameObject> RotatedGuns = new List<GameObject>();
 	List<List<GameObject>> game_world = new List<List<GameObject>>();
 
-	enum Direction
+	public enum Direction
 	{
 		NORTH,EAST,SOUTH,WEST
 	};
 
+	enum Weapons{
+		SWORD,GUN
+	};
+	int weapon_count = 2;
+
 	Direction gun_dir = Direction.EAST;
+	Weapons wep_equiped = Weapons.SWORD;
 
 
 	// Use this for initialization
 	void Start () {
+		health = 10;
 		RotatedGuns.Add (NorthGun);
 		RotatedGuns.Add (EastGun);
 		RotatedGuns.Add (SouthGun);
 		RotatedGuns.Add (WestGun);
-
+		
+		InstructionsText.text = "Press space to use weapon.\n Use W,A,S,D to nav.\n Press E to rotate Weapon and Press R to switch Weapon";
 		UpdateGunDirection ();
 
 		game_world = GenerateWorld (world_width, world_height);
+		chests_collected = 0;
+
+
+		healthbar.text = GenerateHealth (5);
+		
 
 		current_player_pos = Vector2.zero;
 		current_room = game_world[(int)current_player_pos.y * -1][(int)current_player_pos.x];
@@ -75,7 +96,6 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 
 		//Getting Input from the user via Horizontal and vertical axis (Input my varie) wasd
 		float Horizontal = Input.GetAxis ("Horizontal");
@@ -83,8 +103,7 @@ public class Player : MonoBehaviour {
 
 		bool RotateGun = Input.GetKeyUp (KeyCode.E);
 		bool UseWeapon = Input.GetKeyUp (KeyCode.Space);
-		
-
+		bool SwitchWeapon = Input.GetKeyUp (KeyCode.R);
 
 		Vector3 TempPos = gameObject.transform.position; // Getting player's position
 
@@ -140,47 +159,101 @@ public class Player : MonoBehaviour {
 			SouthDoor.SetActive (true);
 		}
 
+
+		if (SwitchWeapon == true) {
+			int wep_number = (int) wep_equiped;
+			wep_number = (wep_number + 1) % weapon_count;
+			wep_equiped = (Weapons) wep_number;
+		}
+	
+
+
+
+
 		if (UseWeapon == true) {
-			GameObject wep = Instantiate(sword) as GameObject;
-			wep.transform.parent = gameObject.transform;
-			Vector3 WepPos = gameObject.transform.position;
+			if (wep_equiped == Weapons.SWORD){
+				GameObject wep = Instantiate(sword) as GameObject;
+				wep.transform.parent = gameObject.transform;
+				Vector3 WepPos = gameObject.transform.position;
 
-			switch (gun_dir){
-				case Direction.EAST:
-					WepPos.x+= gameObject.transform.localScale.x;
-					WepPos.y+= gameObject.transform.localScale.y /4f;
-					break;
-				case Direction.WEST:
-					WepPos.x-= gameObject.transform.localScale.x;
-					WepPos.y+= gameObject.transform.localScale.y /4f;
+				switch (gun_dir){
+					case Direction.EAST:
+						WepPos.x+= gameObject.transform.localScale.x;
+						WepPos.y+= gameObject.transform.localScale.y /4f;
+						break;
+					case Direction.WEST:
+						WepPos.x-= gameObject.transform.localScale.x;
+						WepPos.y+= gameObject.transform.localScale.y /4f;
 
-					wep.transform.Rotate(new Vector3(0,0,180));
-					break;
-				case Direction.NORTH:
-					WepPos.y+= gameObject.transform.localScale.y;
-					wep.transform.Rotate(new Vector3(0,0,90));
+						wep.transform.Rotate(new Vector3(0,0,180));
+						break;
+					case Direction.NORTH:
+						WepPos.y+= gameObject.transform.localScale.y;
+						wep.transform.Rotate(new Vector3(0,0,90));
 
-					break;
-				case Direction.SOUTH:
-					WepPos.y-= gameObject.transform.localScale.y /2;
-					wep.transform.Rotate(new Vector3(0,0,270));
-					
-					break;
+						break;
+					case Direction.SOUTH:
+						WepPos.y-= gameObject.transform.localScale.y /2;
+						wep.transform.Rotate(new Vector3(0,0,270));
+						
+						break;
+				}
+				wep.transform.position = WepPos;
+			}else if (wep_equiped == Weapons.GUN){
+				GameObject go_proj = Instantiate(projectile) as GameObject;
+				go_proj.GetComponent<Projectile>().speed = 10;
+				go_proj.GetComponent<Projectile>().proj_dir = gun_dir;
+				//go_proj.transform.parent = gameObject.transform;
+
+				Vector3 proj_pos = go_proj.transform.position;
+
+				switch (gun_dir){
+					case Direction.NORTH:
+						proj_pos = NorthGun.transform.position;
+						break;
+					case Direction.SOUTH:
+						proj_pos = SouthGun.transform.position;
+						break;
+					case Direction.EAST:
+						proj_pos = EastGun.transform.position;
+						break;
+					case Direction.WEST:
+						proj_pos = WestGun.transform.position;
+						break;
+				}
+				go_proj.transform.position = proj_pos;
+
+
 			}
-			wep.transform.position = WepPos;
+
+
+
+
+
 			UseWeapon = false;
 		}
 
 
 
-
+		wepinfo.text = "Current Wep:\n" + wep_equiped.ToString ();
+		score.text = "Score: " + chests_collected;
 
 		//update players position
 		gameObject.transform.position = TempPos;
-		positiontext.text = "(" + current_player_pos.x + "," + current_player_pos.y + ")";
 
 		current_room = game_world[(int)current_player_pos.y * -1][(int)current_player_pos.x];
 		current_room.SetActive (true);
+		healthbar.text = GenerateHealth (health);
+
+		if (health <= 0) {
+			gameover = true;
+		}
+		
+		if (gameover == true) {
+			gameovertext.text = "Game Over.\n" + score.text;
+		}
+
+
 
 	}
 	void UpdateGunDirection(){
@@ -200,7 +273,6 @@ public class Player : MonoBehaviour {
 		Vector3 tempPos = gameObject.transform.position;
 		switch (other.tag) { // checks for door collisions
 			case "WestDoor":
-				print ("West Door");
 				current_player_pos.x -=1;	
 				
 				tempPos = EastDoor.transform.position;
@@ -208,7 +280,6 @@ public class Player : MonoBehaviour {
 				
 				break;
 			case "EastDoor":
-				print ("East Door");
 				current_player_pos.x+=1;
 
 				tempPos = WestDoor.transform.position;
@@ -216,7 +287,6 @@ public class Player : MonoBehaviour {
 
 				break;
 			case "NorthDoor":
-				print ("North Door");
 				current_player_pos.y+=1;
 
 				tempPos = SouthDoor.transform.position;
@@ -224,7 +294,6 @@ public class Player : MonoBehaviour {
 
 				break;
 			case "SouthDoor":
-				print ("South Door");
 				current_player_pos.y -=1;
 				
 				tempPos = NorthDoor.transform.position;
@@ -234,6 +303,15 @@ public class Player : MonoBehaviour {
 				break;
 		}
 		gameObject.transform.position = tempPos;
+	}
+
+	public string GenerateHealth (int hp){
+		string HealthString = "";
+		for (int i = 0; i < hp; i++) {
+			HealthString = "|" + HealthString;
+		}
+
+		return HealthString;
 	}
 
 	public List<List<GameObject>> GenerateWorld(int width,int height){
@@ -257,6 +335,7 @@ public class Player : MonoBehaviour {
 		return golist;
 		
 	}
+
 
 
 }

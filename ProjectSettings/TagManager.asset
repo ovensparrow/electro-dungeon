@@ -8,6 +8,11 @@ TagManager:
   - EastDoor
   - NorthDoor
   - SouthDoor
+  - Border
+  - Sword
+  - Bullet
+  - Enemy
+  - Chest
   layers:
   - Default
   - TransparentFX
@@ -17,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - EnemyInteraction
   - 
   - 
   - 
