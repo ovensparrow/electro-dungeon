@@ -80,13 +80,13 @@ public class Player : MonoBehaviour {
 		RotatedGuns.Add (SouthGun);
 		RotatedGuns.Add (WestGun);
 		
-		InstructionsText.text = "Press space to use weapon.\n Use W,A,S,D to nav.\n Press E to rotate Weapon and Press R to switch Weapon";
+		InstructionsText.text = "Press space to use weapon.\n Use W,A,S,D to nav.\n Press E to rotate Weapon and Press R to switch Weapon\n Press ESC to Exit \n Press Q to Reload";
 		UpdateGunDirection ();
 
 		game_world = GenerateWorld (world_width, world_height);
 		chests_collected = 0;
 
-
+	
 		healthbar.text = GenerateHealth (5);
 		
 
@@ -100,6 +100,17 @@ public class Player : MonoBehaviour {
 		//Getting Input from the user via Horizontal and vertical axis (Input my varie) wasd
 		float Horizontal = Input.GetAxis ("Horizontal");
 		float Vertical = Input.GetAxis ("Vertical");
+
+		bool quit = Input.GetKeyDown (KeyCode.Escape);
+		bool reload = Input.GetKeyDown (KeyCode.Q);
+
+		if (reload == true) {
+			Application.LoadLevel("MainGame");
+		}
+
+		if (quit == true) {
+			Application.Quit ();
+		}
 
 		bool RotateGun = Input.GetKeyUp (KeyCode.E);
 		bool UseWeapon = Input.GetKeyUp (KeyCode.Space);
